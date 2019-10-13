@@ -10,15 +10,17 @@ class PollService {
     private val results = HashMap<Int, ArrayList<Int>>()
 
     @Throws(InvalidPollIdException::class)
-    fun createPoll(id: Int, question: String, answers: ArrayList<String>) {
+    fun createPoll(question: String, answers: ArrayList<String>): Poll {
+        val id = polls.size
         if (polls[id] != null || results[id] != null) {
             throw InvalidPollIdException(id)
         }
-        val poll = ArrayList<String>()
+        val poll = Poll()
         poll.add(question)
         poll.addAll(answers)
         polls[id] = poll
         results[id] = ArrayList()
+        return poll
     }
 
     @Throws(InvalidPollIdException::class)
@@ -48,4 +50,8 @@ class PollService {
             println("${poll[i]} ($nbVote)")
         }
     }
+}
+
+class Poll : ArrayList<String>() {
+
 }

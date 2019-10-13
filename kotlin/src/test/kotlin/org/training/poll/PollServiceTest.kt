@@ -1,13 +1,13 @@
 package org.training.poll
 
 import org.approvaltests.Approvals
+import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import java.util.*
-import java.io.PrintStream
 import java.io.ByteArrayOutputStream
-
+import java.io.PrintStream
+import java.util.*
 
 
 class PollServiceTest {
@@ -32,24 +32,47 @@ class PollServiceTest {
     }
 
     @Test
-    fun `test approval`() {
-        // given
+    fun `check PollService goldenMaster`() {
+        val pollService = PollService()
+
         pollService.createPoll(
-            0,
             "What is your favorite color?",
             ArrayList(listOf("Blue", "Green", "Red", "Yellow"))
         )
-
-        // when
         pollService.vote(0, 0)
         pollService.vote(0, 0)
         pollService.vote(0, 0)
         pollService.vote(0, 3)
         pollService.vote(0, 2)
         pollService.printResults(0)
-        val output = outContent.toString()
+
+        Approvals.verify(outContent.toString())
+    }
+
+    @Test
+    fun `check PollService invalid poll exception, goldenMaster`() {
+        val pollService = PollService()
+        try {
+            pollService.vote(1, 0)
+            Assertions.fail<String>("InvalidPollId should failed")
+        } catch (e: InvalidPollIdException) {
+            Assertions.assertThat(e.toString())
+                .isEqualTo("org.training.poll.InvalidPollIdException: Id of poll is invalid: 1")
+        }
+    }
+
+
+    @Test
+    fun `createPoll returns a Poll`() {
+        // given
+        val pollService = PollService()
+
+        // when
+        val poll: Poll = pollService.createPoll("question", ArrayList(listOf("Blue", "Green", "Red", "Yellow")))
 
         // then
-        Approvals.verifyAll("", arrayOf(output))
+        Assertions.assertThat(poll).isNotNull()
     }
+
+
 }

@@ -1,0 +1,10 @@
+What is your favorite color?
+Blue (3)
+Green (0)
+Red (1)
+Yellow (1)
+What is your favorite car?
+BlueCar (2)
+GreenCar (1)
+RedCar (1)
+YellowCar (1)

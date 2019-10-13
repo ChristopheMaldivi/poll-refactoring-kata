@@ -6,7 +6,6 @@ fun main(args: Array<String>) {
     val pollService = PollService()
     try {
         pollService.createPoll(
-            0,
             "What is your favorite color?",
             ArrayList(listOf("Blue", "Green", "Red", "Yellow"))
         )

@@ -1,6 +1,5 @@
-[0] = What is your favorite color?
+What is your favorite color?
 Blue (3)
 Green (0)
 Red (1)
 Yellow (1)
-
